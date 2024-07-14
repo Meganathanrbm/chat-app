@@ -6,7 +6,11 @@ const user = new mongoose.Schema(
       type: String,
       required: true,
     },
-    username: {
+    mobile: {
+      type: String,
+      required: true,
+    },
+    emailId: {
       type: String,
       required: true,
       unique: true,
@@ -15,6 +19,12 @@ const user = new mongoose.Schema(
       type: String,
       minLength: 6,
       required: true,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
     },
     gender: {
       type: String,
@@ -27,7 +37,7 @@ const user = new mongoose.Schema(
     },
   },
   // for createdAt and updatedAt
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", user);

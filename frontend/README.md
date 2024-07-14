@@ -1,8 +1,32 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Frontend
+-Dynamic Route
+-profile page - add logout here
+-whatsapp like ui 
+-forget password
+
+# Backend
+<!-- -forget password -->
+change gmail id for reset password mail
+change navbarlist
+
+# Pending task
+<!-- dark mode -->
+<!-- signup -->
+<!-- logout -->
+<!-- login -->
+<!-- send message -->
+<!-- get message -->
+<!-- back btn -->
+<!-- backend integration -->
+<!-- integrate socket io -->
+<!-- search -->
+chat list
+new chat
+since start year
+message sound
+notifications
+scrollbar issue
+dynamic layout

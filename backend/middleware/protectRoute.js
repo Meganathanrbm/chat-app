@@ -4,7 +4,7 @@ import User from "../db/models/user.model.js";
 // route level middleware
 const protectRoute = async (req, res, next) => {
   try {
-    // get the jwt froj the cookies
+    // get the jwt from the cookies
     const token = req.cookies.jwt;
 
     if (!token) {

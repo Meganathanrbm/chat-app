@@ -1,5 +1,6 @@
 import Conversation from "../db/models/conversation.model.js";
 import Message from "../db/models/message.model.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -7,7 +8,7 @@ export const sendMessage = async (req, res) => {
     const { id: receiverId } = req.params; // from the params dynamic route
     const senderId = req.user._id; // from the protectRoute middleware
 
-    // find the conversation 
+    // find the conversation
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
     });
@@ -17,7 +18,7 @@ export const sendMessage = async (req, res) => {
         participants: [senderId, receiverId],
       });
     }
-    
+
     const newMessage = new Message({
       senderId,
       receiverId,
@@ -26,14 +27,25 @@ export const sendMessage = async (req, res) => {
     if (newMessage) {
       conversation.messages.push(newMessage);
     }
-    Promise.all([newMessage.save(), conversation.save()]);
-    res.status(201).json({ code: 201, message: "message send successfully" });
+    await Promise.all([newMessage.save(), conversation.save()]);
+
+    // socket io functionality
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      // io.to(<socketId>).emit() is used to send event to specifiy user
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+    res.status(201).json({
+      code: 201,
+      data: newMessage,
+      message: "message send successfully",
+    });
   } catch (error) {
     console.log("send message failed", error);
     res.status(500).json({ code: 500, error: "Internal Server Error" });
   }
 };
- 
+
 export const getMessage = async (req, res) => {
   try {
     const { id: userToChat } = req.params;
@@ -42,7 +54,7 @@ export const getMessage = async (req, res) => {
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, userToChat] },
     }).populate("messages");
-    
+
     if (!conversation) {
       return res.status(200).json({ code: 200, data: [] });
     }
