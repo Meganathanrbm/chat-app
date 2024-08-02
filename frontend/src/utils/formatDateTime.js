@@ -9,3 +9,15 @@ export function formatTime(dateTimeString) {
 
   return `${formattedHours}:${minutes} ${ampm}`;
 }
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString); // Parse the date-time string
+
+  // Extract day, month, and year components
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "long" }); // Get full month name
+  const year = date.getFullYear();
+
+  // Format the date in the desired format
+  return `${day} ${month} ${year}`;
+};

@@ -5,11 +5,12 @@ import toast from "react-hot-toast";
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
   const { selectedConversation, messages, setMessages } = useConversation();
+
   useEffect(() => {
     const getMessage = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`api/message/${selectedConversation?._id}`);
+        const res = await fetch(`/api/message/${selectedConversation?._id}`);
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         setMessages(data.data);

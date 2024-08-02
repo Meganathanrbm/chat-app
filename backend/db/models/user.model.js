@@ -35,6 +35,10 @@ const user = new mongoose.Schema(
       type: String,
       default: "",
     },
+    chatList: {
+      type: Object,
+      default: {},
+    },
   },
   // for createdAt and updatedAt
   { timestamps: true }

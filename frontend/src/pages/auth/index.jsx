@@ -10,14 +10,11 @@ const Auth = () => {
   useEffect(() => {
     if (authUser) {
       navigate("/");
-    } else {
-      navigate("/auth/login");
     }
   }, []);
   return (
     <div className="w-full center relative overflow-hidden h-full ">
       <BackgroundDesign />
-      <DarkToggle />
       <Outlet />
     </div>
   );

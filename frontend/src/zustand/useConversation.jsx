@@ -5,6 +5,7 @@ const useConversation = create((set) => ({
     JSON.parse(localStorage.getItem("selectedConversation")) || null, // set selected conversation from the local storage
   setSelectedConversation: (selectedConversation) => {
     set({ selectedConversation }); // selectedConversation:selectedConversation
+    set({ viewProfile: null }); // reset the selected profile
     if (typeof window !== "undefined") {
       // Ensure localStorage availability
       localStorage.setItem(
@@ -15,6 +16,9 @@ const useConversation = create((set) => ({
   },
   messages: [],
   setMessages: (messages) => set({ messages }),
+  viewProfile: null,
+  setViewProfile: (viewProfile) => set({ viewProfile }),
+
 }));
 
 export default useConversation;

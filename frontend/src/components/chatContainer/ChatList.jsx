@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Conversation } from "./Conversation";
 import useGetConversation from "../../hooks/useGetConversation";
-import useConversation from "../../zustand/useConversation";
 import { FaPlus } from "react-icons/fa6";
+import useGetAllUsers from "../../hooks/useGetAllUsers";
 
-export const ChatList = ({ searchInput, setSearchInput }) => {
-  const { loading, conversations } = useGetConversation();
+export const ChatList = ({ searchInput, searchRef, setSearchInput }) => {
+  const { conversations } = useGetConversation();
   const [allconversations, setAllconversations] = useState(null);
+  const { loading, allUsers } = useGetAllUsers();
 
   useEffect(() => {
     const handleSearch = () => {
-      const filteredConversations = conversations?.filter(
+      // Todo: filter mobile number also
+      const filteredConversations = allUsers?.filter(
         (convo) =>
           convo.fullname.toLowerCase().includes(searchInput.toLowerCase()) ||
-          convo.mobile.includes(searchInput)
+          convo.emailId.toLowerCase().includes(searchInput.toLowerCase())
       );
-      setAllconversations(filteredConversations);
+      searchInput.length >= 1 && setAllconversations(filteredConversations);
     };
     handleSearch();
   }, [searchInput]);
+
   useEffect(() => {
-    setAllconversations(conversations);
-  }, [conversations]);
+    searchInput.length < 1 && setAllconversations(conversations);
+  }, [conversations, searchInput]);
   return (
     <div className=" py-3 sm:py-4 divide-y relative dark:divide-gray-800 overflow-y-auto h-full">
       {allconversations?.map((convo) => (
@@ -33,6 +36,7 @@ export const ChatList = ({ searchInput, setSearchInput }) => {
       <div
         className="absolute bottom-20 md:hidden right-10 p-2 w-10 h-10  center 
       rounded-lg bg-primary-100 cursor-pointer "
+        onClick={() => searchRef.current.focus()}
       >
         <FaPlus className="text-white font-bold text-lg" />
       </div>

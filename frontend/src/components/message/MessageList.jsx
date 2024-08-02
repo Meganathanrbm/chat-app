@@ -14,6 +14,7 @@ const MessageList = ({}) => {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }, [messages]);
+
   return (
     <div className="flex flex-col ">
       {!loading &&

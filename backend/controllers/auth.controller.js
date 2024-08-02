@@ -29,6 +29,19 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // for side panel user profile list
+    const allUsers = await User.find(
+      {},
+      {
+        _id: 1,
+        fullname: 1,
+        profilePic: 1,
+        createdAt: 1,
+        gender: 1,
+        emailId: 1,
+      }
+    );
+
     const newUser = new User({
       fullname,
       mobile,
@@ -36,6 +49,7 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       gender,
       profilePic: gender === "male" ? boy : girl,
+      chatList: allUsers,
     });
 
     if (newUser) {
@@ -52,6 +66,7 @@ export const signup = async (req, res) => {
           emailId: newUser.emailId,
           profilePic: newUser.profilePic,
           gender: newUser.gender,
+          createdAt: newUser.createdAt,
         },
         message: "Signup success!",
       });
@@ -86,6 +101,7 @@ export const login = async (req, res) => {
         emailId: user.emailId,
         profilePic: user.profilePic,
         gender: user.gender,
+        createdAt: user.createdAt,
       },
       message: "Login success!.",
     });

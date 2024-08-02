@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import useConversation from "../zustand/useConversation";
 
 const useGetConversation = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState();
+  const { messages, setMessages } = useConversation();
   useEffect(() => {
     const getConversation = async () => {
       try {
@@ -18,11 +20,11 @@ const useGetConversation = () => {
         console.log(error);
         toast.error(error?.message);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     getConversation();
-  }, []);
+  }, [messages, setMessages]);
   return { loading, conversations };
 };
 

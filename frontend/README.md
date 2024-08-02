@@ -23,10 +23,20 @@ change navbarlist
 <!-- backend integration -->
 <!-- integrate socket io -->
 <!-- search -->
-chat list
-new chat
-since start year
-message sound
+<!-- message sound -->
+<!-- dynamic layout -->
+<!-- last send message for chat list -->
+<!-- profile page -->
+<!-- since start year -->
+<!-- forget password page -->
+<!-- chat list -->
+<!-- new message -->
+<!-- mobile: profile page -->
+<!-- mobile layout setting dropdown -->
+
+
+forget password mail userId pass change
 notifications
 scrollbar issue
-dynamic layout
+unread message 
+Profile About
