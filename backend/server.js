@@ -5,7 +5,7 @@ import connectToDB from "./db/connectToDB.js";
 import cookieParser from "cookie-parser";
 import apiRouter from "./routers/index.js";
 import { app, server } from "./socket/socket.js";
-import { fetchUsers, userList } from "./utils/userList.js";
+
 import User from "./db/models/user.model.js";
 import path from "path";
 
@@ -25,14 +25,11 @@ app.use("/api", apiRouter);
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));  
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
 });
 
 server.listen(PORT, () => {
-  connectToDB().then(async () => {
-    const users = await User.find({});
-    fetchUsers(users);
-  });
+  connectToDB();
   console.log(
     `Server is hosting in ${PORT} 🔥 - ${new Date().toDateString()} / ${new Date().toLocaleTimeString()}`
   );
