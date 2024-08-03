@@ -17,9 +17,9 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("Server is Live⚡");
-});
+// app.get("/", (req, res) => {
+//   res.send("Server is Live⚡");
+// });
 app.use("/api", apiRouter);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
