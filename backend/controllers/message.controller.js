@@ -31,19 +31,15 @@ export const sendMessage = async (req, res) => {
     // chatlist
     const sender = await User.findOne({ _id: senderId });
     const receiver = await User.findOne({ _id: receiverId });
-    // let senderChatList = new Set(sender.chatList?.map((user) => user._id));
-    let sendermp = {};
-    let receivermp = {};
-    // filter the unique chats
-    let senderChatList = sender.chatList.filter((user) => {
-      sendermp[user.emailId] = (sendermp[user.emailId] || 0) + 1;
-      return user.emailId !== receiver.emailId && sendermp[user.emailId] <= 1;
-    });
-    let receiverChatList = receiver.chatList.filter((user) => {
-      receivermp[user.emailId] = (receivermp[user.emailId] || 0) + 1;
-      return user.emailId !== sender.emailId && sendermp[user.emailId] <= 1;
-    });
-    senderChatList = [
+
+    // filter the chats
+    const senderChatList = sender.chatList.filter(
+      (user) => user.emailId !== receiver.emailId
+    );
+    const receiverChatList = receiver.chatList.filter(
+      (user) => user.emailId !== sender.emailId
+    );
+    sender.chatList = [
       {
         _id: receiver._id,
         fullname: receiver.fullname,
@@ -54,19 +50,18 @@ export const sendMessage = async (req, res) => {
       },
       ...senderChatList,
     ];
-    receiverChatList = [
+    receiver.chatList = [
       {
         _id: sender._id,
         fullname: sender.fullname,
         emailId: sender.emailId,
         gender: sender.gender,
         createdAt: sender.createdAt,
-        profilePic: receiver.profilePic,
+        profilePic: sender.profilePic,
       },
       ...receiverChatList,
     ];
-    sender.chatList = senderChatList;
-    receiver.chatList = receiverChatList;
+
     await Promise.all([
       newMessage.save(),
       conversation.save(),
@@ -79,7 +74,7 @@ export const sendMessage = async (req, res) => {
     if (receiverSocketId) {
       //  io.to(<socketId>).emit() is used to send event to specifiy user
       io.to(receiverSocketId).emit("newMessage", newMessage);
-      // io.to(receiverSocketId).emit("newChatList", receiverChatList);
+      io.to(receiverSocketId).emit("newChatList", receiverChatList);
     }
     res.status(201).json({
       code: 201,

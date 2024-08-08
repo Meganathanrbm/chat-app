@@ -33,10 +33,12 @@ change navbarlist
 <!-- new message -->
 <!-- mobile: profile page -->
 <!-- mobile layout setting dropdown -->
-
+<!-- fixed the new chat user message 
+ & the profile pic issue -->
 
 forget password mail userId pass change
 notifications
 scrollbar issue
 unread message 
 Profile About
+

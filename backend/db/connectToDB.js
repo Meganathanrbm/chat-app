@@ -4,7 +4,6 @@ const connectToDB = async () => {
   try {
     const uri = process.env.MONGODB_CONNECT_URI;
     await mongoose
-      // .connect(uri + "/chat-app")//dev
       .connect(uri)
       .then((data) => {
         console.log(

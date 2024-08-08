@@ -11,10 +11,9 @@ export const useListenMessage = () => {
     socket?.on("newMessage", (message) => {
       const sound = new Audio(tone);
       setMessages([...messages, message]);
-      sound.volume = 0.5
+      sound.volume = 0.5;
       sound.play();
     });
     return () => socket?.off("newMessage");
-    ``;
   }, [socket, messages, setMessages]);
 };
