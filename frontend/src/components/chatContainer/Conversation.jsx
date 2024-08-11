@@ -5,9 +5,11 @@ import { useWidth } from "../../hooks/useWidth";
 import { useNavigate } from "react-router-dom";
 import useLastMessage from "../../hooks/useLastMessage";
 import { formatTime } from "../../utils/formatDateTime";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Conversation = ({ conversation }) => {
   const navigate = useNavigate();
+  const { authUser } = useContext(AuthContext);
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { onlineUsers } = useContext(SocketContext);
   const width = useWidth();
@@ -16,7 +18,14 @@ export const Conversation = ({ conversation }) => {
   const isOnline = onlineUsers?.includes(conversation?._id); // online status
 
   // dynamic layout for responsive
-  const handleSelectConversation = () => {
+  const handleSelectConversation = async () => {
+    // remove new message tag if conversation is selected.
+    try {
+      // seen last message api
+      await fetch(`/api/message/lastSeen/${lastMessage?._id}`);
+    } catch (error) {
+      console.log(error); // ! command this in production.
+    }
     setSelectedConversation(conversation);
     if (width) {
       navigate(`/conversation/${conversation?.fullname}`);
@@ -43,10 +52,18 @@ export const Conversation = ({ conversation }) => {
             {lastMessage.createdAt && formatTime(lastMessage.createdAt)}
           </span>
         </h4>
-        <p className="text-[13px] leading-5 text-slate-500 dark:text-slate-400 font-normal">
+        <p className="text-[13px] leading-5 line-clamp-1 text-slate-500 pr-6 dark:text-slate-400 font-normal">
           {lastMessage?.message}
           {/* for maintain height consistent */}
-          <span className=" opacity-0 ">!</span>
+          <span className=" opacity-0">!</span>
+          {/* new message notify tag */}
+          {lastMessage && !lastMessage?.seen &&
+            lastMessage?.senderId != authUser?._id && // check - new message is from the other end
+            selectedConversation?._id != lastMessage?.senderId && ( // check other end is not selected coversation.
+              <span className="float-right z-10 absolute right-0 top-1/2 text-white text-[9px] p-2 center mt-1 bg-primary-100 rounded-full w-1 h-1">
+                1
+              </span>
+            )}
         </p>
       </div>
     </div>

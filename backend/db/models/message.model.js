@@ -1,4 +1,4 @@
-import  mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 const message = new mongoose.Schema(
   {
@@ -15,6 +15,10 @@ const message = new mongoose.Schema(
     message: {
       type: String,
       required: true,
+    },
+    seen: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

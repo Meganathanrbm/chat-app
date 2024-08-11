@@ -11,7 +11,9 @@ const MessageContent = () => {
 
   return (
     <div className="bg-messageContent px-6 py-4 h-full w-full overflow-auto ">
-      {loading && [...Array(2)].map((_, i) => <MessageSkeleton key={i} />)}
+      {loading &&
+        messages.length == 0 &&
+        [...Array(2)].map((_, i) => <MessageSkeleton key={i} />)}
       {!loading && messages.length == 0 && (
         <p className="text-center text-base">
           Send a message to start the coversation

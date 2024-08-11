@@ -35,10 +35,11 @@ change navbarlist
 <!-- mobile layout setting dropdown -->
 <!-- fixed the new chat user message 
  & the profile pic issue -->
+<!-- shimmer ui loading issue -->
+<!-- new message notify tag / unread message -->
 
 forget password mail userId pass change
 notifications
 scrollbar issue
-unread message 
 Profile About
 

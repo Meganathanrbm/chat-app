@@ -74,7 +74,7 @@ export const sendMessage = async (req, res) => {
     if (receiverSocketId) {
       //  io.to(<socketId>).emit() is used to send event to specifiy user
       io.to(receiverSocketId).emit("newMessage", newMessage);
-      io.to(receiverSocketId).emit("newChatList", receiverChatList);
+      io.to(receiverSocketId).emit("newChatList", receiver.chatList);
     }
     res.status(201).json({
       code: 201,
@@ -123,5 +123,29 @@ export const getLastMessage = async (req, res) => {
   } catch (error) {
     console.log("get last message failed", error);
     res.status(500).json({ code: 500, error: "Internal Server Error" });
+  }
+};
+
+export const seenMessage = async (req, res) => {
+  try {
+    const { id: messageId } = req.params;
+    const updatedMessage = await Message.findByIdAndUpdate(
+      messageId,
+      { seen: true },
+      { new: true } // Return the updated document
+    );
+    if (!updatedMessage) {
+      return res.status(500).json({
+        code: 500,
+        message: "Internal Server Error!",
+      });
+    }
+    return res.status(200).json({
+      code: 200,
+      message: "Message marked as seen!",
+    });
+  } catch (error) {
+    console.error("Error in seenMessage:", error);
+    return res.status(500).json({ code: 500, error: "Internal Server Error" });
   }
 };

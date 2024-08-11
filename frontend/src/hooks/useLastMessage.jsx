@@ -3,7 +3,9 @@ import toast from "react-hot-toast";
 import useConversation from "../zustand/useConversation";
 
 const useLastMessage = (receiverId) => {
-  const { messages } = useConversation();
+  const { messages, selectedConversation, setSelectedConversation } =
+    useConversation();
+
   const [lastMessage, setLastMessage] = useState("");
   useEffect(() => {
     const getLastMessage = async (receiverId) => {
@@ -17,7 +19,7 @@ const useLastMessage = (receiverId) => {
       }
     };
     getLastMessage(receiverId);
-  }, [messages, receiverId]);
+  }, [messages, selectedConversation, setSelectedConversation, receiverId]);
   return lastMessage;
 };
 

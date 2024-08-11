@@ -45,7 +45,7 @@ function App() {
         )}
 
         {/* for small devices */}
-        {width && (
+        {width && ( 
           <>
             <Route path="/" element={<ProtectedRoute />}>
               <Route path="/" element={<ChatContainer />} />
