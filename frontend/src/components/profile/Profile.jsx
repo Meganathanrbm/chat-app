@@ -1,24 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import useConversation from "../../zustand/useConversation";
 import { SocketContext } from "../../context/SocketContext";
 import { formatDate } from "../../utils/formatDateTime";
 import { useNavigate } from "react-router-dom";
 import { useWidth } from "../../hooks/useWidth";
+import { MdEdit } from "react-icons/md";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../../context/AuthContext";
+import useUpdateProfileAbout from "../../hooks/useUpdateProfileAbout";
 
 export const Profile = () => {
+  const [isAboutEdit, setIsAboutEdit] = useState(false);
   const { setViewProfile, viewProfile } = useConversation();
+  const [aboutContent, setAboutContent] = useState();
   const { onlineUsers } = useContext(SocketContext);
+  const { authUser } = useContext(AuthContext);
   const isOnline = onlineUsers?.includes(viewProfile?._id);
   const navigate = useNavigate();
   const width = useWidth();
+  const { loading, updateProfileAbout } = useUpdateProfileAbout({
+    setIsAboutEdit,
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const closeProfile = () => {
-    if (width) {
-      navigate(-1);
-    }
+    if (width) navigate(-1);
     setViewProfile(null);
   };
-
+  const handleAboutText = (data) => {
+    if (viewProfile?._id === authUser?._id) {
+      updateProfileAbout(data);
+    }
+  };
+  useEffect(() => {
+    setAboutContent(viewProfile?.about);
+  }, [viewProfile, isAboutEdit]);
   return (
     <section
       className=" h-full w-full md:min-w-[400px] lg:max-w-[500px] lg:min-w-[400px] 
@@ -71,11 +92,51 @@ export const Profile = () => {
       </div>
       {/* about */}
       <div className="px-5 sm:px-6 py-3 border-b dark:border-b-gray-800">
-        <h4 className="text-black dark:text-white text-lg mb-1">About</h4>
-        <p className="text-slate-500 dark:text-slate-400 text-base">
-          Atque, labore fugiat, nihil rem possimus animi debitis similique
-          cumque distinctio alias dolor.
-        </p>
+        <h4 className="text-black flex items-center dark:text-white text-lg mb-1">
+          About
+          {viewProfile?._id === authUser?._id && (
+            <span
+              onClick={() => setIsAboutEdit(true)}
+              className="float-right ml-auto cursor-pointer"
+            >
+              <MdEdit />
+            </span>
+          )}
+        </h4>
+        <form action="" onSubmit={handleSubmit(handleAboutText)}>
+          <textarea
+            {...register("about", { maxLength: 100, required: true })}
+            readOnly={!isAboutEdit}
+            value={aboutContent}
+            onChange={(e) => setAboutContent(e.target.value)}
+            className="text-slate-500 bg-transparent pt-0 mt-0 text-justify resize-none border-none overflow-hidden w-full break-words outline-none dark:text-slate-400 text-base"
+          ></textarea>
+          {errors.about && (
+            <p className="text-red-500 text-xs mt-1">
+              Maximum length is 100 Charecters.
+            </p>
+          )}
+          {isAboutEdit && (
+            <div className="flex items-center gap-6 mt-2">
+              <button
+                type="submit"
+                className="btn btn-sm font-medium rounded-md bg-primary-100 text-slate-100 hover:bg-primary-100 outline-none border-none"
+              >
+                {loading ? (
+                  <span className="loading loading-spinner loading-md"></span>
+                ) : (
+                  "Save"
+                )}
+              </button>
+              <button
+                onClick={() => setIsAboutEdit(false)}
+                className="btn btn-neutral  font-medium rounded-md text-sm btn-sm"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </form>
       </div>
       <div className="px-5 sm:px-6 py-3 border-b dark:border-b-gray-800">
         <p className="text-slate-500 dark:text-slate-400  text-base mb-1">

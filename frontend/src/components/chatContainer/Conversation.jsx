@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useConversation from "../../zustand/useConversation";
 import { SocketContext } from "../../context/SocketContext";
 import { useWidth } from "../../hooks/useWidth";
@@ -9,6 +9,8 @@ import { AuthContext } from "../../context/AuthContext";
 
 export const Conversation = ({ conversation }) => {
   const navigate = useNavigate();
+  // for new message notification tag for 1s.
+  const [notify, setNotify] = useState(true);
   const { authUser } = useContext(AuthContext);
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { onlineUsers } = useContext(SocketContext);
@@ -17,20 +19,39 @@ export const Conversation = ({ conversation }) => {
   const isActive = conversation?._id === selectedConversation?._id; // selected conversation
   const isOnline = onlineUsers?.includes(conversation?._id); // online status
 
-  // dynamic layout for responsive
-  const handleSelectConversation = async () => {
-    // remove new message tag if conversation is selected.
+  const handleSeen = async () => {
     try {
       // seen last message api
       await fetch(`/api/message/lastSeen/${lastMessage?._id}`);
     } catch (error) {
       console.log(error); // ! command this in production.
     }
+  };
+
+  // dynamic layout for responsive
+  const handleSelectConversation = async () => {
+    // remove new message tag if conversation is selected.
+    handleSeen();
     setSelectedConversation(conversation);
     if (width) {
       navigate(`/conversation/${conversation?.fullname}`);
     }
   };
+  useEffect(() => {
+    let timeout;
+    setNotify(true);
+    if (selectedConversation?._id === lastMessage?.senderId) {
+      handleSeen();
+      // other end user is online and in the same chat - show notification only for 1s
+      timeout = setTimeout(() => {
+        setNotify(false);
+      }, 1000);
+    } else {
+      setNotify(true);
+    }
+    // cleanup function
+    return () => clearTimeout(timeout);
+  }, [selectedConversation, lastMessage]);
   return (
     <div
       onClick={handleSelectConversation}
@@ -57,9 +78,11 @@ export const Conversation = ({ conversation }) => {
           {/* for maintain height consistent */}
           <span className=" opacity-0">!</span>
           {/* new message notify tag */}
-          {lastMessage && !lastMessage?.seen &&
+          {lastMessage &&
+            lastMessage?.message?.length > 0 &&
+            !lastMessage?.seen &&
             lastMessage?.senderId != authUser?._id && // check - new message is from the other end
-            selectedConversation?._id != lastMessage?.senderId && ( // check other end is not selected coversation.
+            notify && (
               <span className="float-right z-10 absolute right-0 top-1/2 text-white text-[9px] p-2 center mt-1 bg-primary-100 rounded-full w-1 h-1">
                 1
               </span>

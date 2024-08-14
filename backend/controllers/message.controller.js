@@ -47,6 +47,7 @@ export const sendMessage = async (req, res) => {
         gender: receiver.gender,
         createdAt: receiver.createdAt,
         profilePic: receiver.profilePic,
+        about: receiver.about,
       },
       ...senderChatList,
     ];
@@ -58,6 +59,7 @@ export const sendMessage = async (req, res) => {
         gender: sender.gender,
         createdAt: sender.createdAt,
         profilePic: sender.profilePic,
+        about: sender.about,
       },
       ...receiverChatList,
     ];

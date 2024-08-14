@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 const useLogIn = () => {
   const [loading, setLoading] = useState(false);
-  const { authUser, setAuthUser } = useContext(AuthContext);
+  const { setAuthUser } = useContext(AuthContext);
   const login = async ({ emailId, password }) => {
     setLoading(true);
     try {

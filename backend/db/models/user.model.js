@@ -35,6 +35,11 @@ const user = new mongoose.Schema(
       type: String,
       default: "",
     },
+    about: {
+      type: String,
+      default: "Hey! there am using Chatapp!.",
+      maxLength: 100,
+    },
     chatList: {
       type: Object,
       default: {},

@@ -39,6 +39,7 @@ export const signup = async (req, res) => {
         createdAt: 1,
         gender: 1,
         emailId: 1,
+        about: 1,
       }
     );
 
@@ -67,6 +68,7 @@ export const signup = async (req, res) => {
           profilePic: newUser.profilePic,
           gender: newUser.gender,
           createdAt: newUser.createdAt,
+          about: newUser.about,
         },
         message: "Signup success!",
       });
@@ -102,6 +104,7 @@ export const login = async (req, res) => {
         profilePic: user.profilePic,
         gender: user.gender,
         createdAt: user.createdAt,
+        about: user.about,
       },
       message: "Login success!.",
     });
