@@ -7,7 +7,7 @@ import useGetAllUsers from "../../hooks/useGetAllUsers";
 export const ChatList = ({ searchInput, searchRef, setSearchInput }) => {
   const { conversations } = useGetConversation();
   const [allconversations, setAllconversations] = useState(null);
-  const { loading, allUsers } = useGetAllUsers();
+  const { allUsers } = useGetAllUsers();
 
   useEffect(() => {
     const handleSearch = () => {

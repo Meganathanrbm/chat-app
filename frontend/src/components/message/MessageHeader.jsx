@@ -3,7 +3,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import useConversation from "../../zustand/useConversation";
 import { SocketContext } from "../../context/SocketContext";
 import { useWidth } from "../../hooks/useWidth";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MessageHeader = () => {
   const {

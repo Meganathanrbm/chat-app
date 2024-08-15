@@ -256,7 +256,7 @@ const SignUp = () => {
         Signup
       </p>
       <p className="text-center mt-2 mb-6 text-[15px] text-wrap md:text-nowrap dark:text-gray-400 text-gray-800">
-        Create your free account to join the conversation.
+        Create your free account now to join the chat
       </p>
       {nextBtn ? (
         <SignUpScreen2

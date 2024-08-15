@@ -1,18 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import useLogIn from "../../hooks/useLogIn";
+
 const Login = () => {
-  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const { loading, login } = useLogIn();
-
   const onSubmit = async (data) => {
     await login(data);
   };
@@ -92,7 +89,10 @@ const Login = () => {
           <Link to="/auth/signup" className="hover:underline  cursor-pointer">
             Don't have an account?
           </Link>
-          <Link to="/auth/forgetPassword" className="hover:underline  cursor-pointer">
+          <Link
+            to="/auth/forgetPassword"
+            className="hover:underline  cursor-pointer"
+          >
             Forget Password?
           </Link>
         </div>

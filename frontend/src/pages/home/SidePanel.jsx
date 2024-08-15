@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
 import useLogOut from "../../hooks/useLogOut";
 import { AuthContext } from "../../context/AuthContext";
 import useConversation from "../../zustand/useConversation";

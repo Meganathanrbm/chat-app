@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSearchSharp } from "react-icons/io5";
 import { HiMiniXMark } from "react-icons/hi2";
 import useConversation from "../../zustand/useConversation";
 import useLogOut from "../../hooks/useLogOut";
 import { AuthContext } from "../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useWidth } from "../../hooks/useWidth";
+import { Link } from "react-router-dom";
 
 export const ChatHeader = ({ searchInput, searchRef, setSearchInput }) => {
   const { authUser, darkToggle, setDarkToggle } = useContext(AuthContext);
   const { logout } = useLogOut();
-  const { width } = useWidth();
   const { setViewProfile } = useConversation();
-  const navigate = useNavigate();
+
   const handleLogout = async () => {
     await logout();
   };

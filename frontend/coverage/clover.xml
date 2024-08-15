@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1723737968984" clover="3.2.0">
+  <project timestamp="1723737968984" name="All files">
+    <metrics statements="35" coveredstatements="12" conditionals="14" coveredconditionals="3" methods="7" coveredmethods="2" elements="56" coveredelements="17" complexity="0" loc="35" ncloc="35" packages="4" files="4" classes="4"/>
+    <package name="context">
+      <metrics statements="9" coveredstatements="2" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="AuthContext.jsx" path="C:\Users\Mega\Desktop\Projects\chat-app\frontend\src\context\AuthContext.jsx">
+        <metrics statements="9" coveredstatements="2" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="hooks">
+      <metrics statements="16" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="useLogIn.js" path="C:\Users\Mega\Desktop\Projects\chat-app\frontend\src\hooks\useLogIn.js">
+        <metrics statements="16" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.auth">
+      <metrics statements="6" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="1"/>
+      <file name="Login.jsx" path="C:\Users\Mega\Desktop\Projects\chat-app\frontend\src\pages\auth\Login.jsx">
+        <metrics statements="6" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.home">
+      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="ChatContainer.jsx" path="C:\Users\Mega\Desktop\Projects\chat-app\frontend\src\pages\home\ChatContainer.jsx">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
