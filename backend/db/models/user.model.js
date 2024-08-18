@@ -4,11 +4,9 @@ const user = new mongoose.Schema(
   {
     fullname: {
       type: String,
-      required: true,
     },
     mobile: {
       type: String,
-      required: true,
     },
     emailId: {
       type: String,
@@ -28,7 +26,6 @@ const user = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
       enum: ["male", "female"],
     },
     profilePic: {
