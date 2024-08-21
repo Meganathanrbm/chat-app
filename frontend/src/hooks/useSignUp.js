@@ -4,9 +4,10 @@ import { AuthContext } from "../context/AuthContext";
 
 const useSignUp = () => {
   const [loading, setLoading] = useState(false);
-  const { authUser, setAuthUser } = useContext(AuthContext);
+  const { setAuthUser } = useContext(AuthContext);
   const signup = async ({ fullname, mobile, emailId, gender }) => {
     try {
+      setLoading(true);
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
