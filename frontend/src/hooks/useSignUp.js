@@ -5,17 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const useSignUp = () => {
   const [loading, setLoading] = useState(false);
   const { authUser, setAuthUser } = useContext(AuthContext);
-  const signup = async ({
-    fullname,
-    mobile,
-    emailId,
-    password,
-    confirmPassword,
-    gender,
-  }) => {
-    if (password !== confirmPassword) {
-      return toast.error("Password doesn't match!");
-    }
+  const signup = async ({ fullname, mobile, emailId, gender }) => {
     try {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
@@ -23,9 +13,7 @@ const useSignUp = () => {
         body: JSON.stringify({
           fullname,
           mobile,
-          password,
           emailId,
-          confirmPassword,
           gender,
         }),
       });
@@ -37,6 +25,7 @@ const useSignUp = () => {
       localStorage.setItem("chat-user", JSON.stringify(data.data));
       // context
       setAuthUser(data.data);
+      sessionStorage.removeItem("current-user-emailID");
     } catch (error) {
       console.log(error);
       toast.error(error?.message);

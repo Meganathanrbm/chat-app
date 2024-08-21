@@ -40,8 +40,5 @@ change navbarlist
 <!-- Profile About -->
 
 
-forget password mail userId pass change
-notifications
-scrollbar issue
 
 

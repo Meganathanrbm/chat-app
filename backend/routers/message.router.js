@@ -12,6 +12,6 @@ const messageRouter = express.Router();
 messageRouter.get("/:id", protectRoute, getMessage);
 messageRouter.get("/last/:id", protectRoute, getLastMessage);
 messageRouter.get("/lastSeen/:id", protectRoute, seenMessage);
-messageRouter.post("/send/:id", protectRoute, sendMessage);
+messageRouter.post("/send/:id", protectRoute, sendMessage); 
 
 export default messageRouter;

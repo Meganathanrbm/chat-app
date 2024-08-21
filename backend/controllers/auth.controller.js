@@ -24,7 +24,7 @@ export const signup = async (req, res) => {
 
     // for side panel user profile list
     const allUsers = await User.find(
-      {},
+      { _id: { $ne: user._id } },
       {
         _id: 1,
         fullname: 1,
@@ -141,7 +141,7 @@ export const forgetPassword = async (req, res) => {
       "host"
     )}/auth/resetPassword/${token}`;
     const emailOptions = {
-      from: "chat-app@gmail.com",
+      from: `"Chat-App" <${process.env.EMAIL_ID}>`,
       to: emailId,
       subject: "Chat App Reset Password!.",
       html: `
@@ -207,7 +207,6 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ code: 500, error: "Internal Server Error " });
   }
 };
-// otp generate
 export const generateOTP = async (req, res) => {
   try {
     const { emailId, password, confirmPassword } = req.body;
@@ -280,7 +279,68 @@ export const generateOTP = async (req, res) => {
     return res.status(500).json({ code: 500, error: "Internal Server Error!" });
   }
 };
-// verify OTP
+export const resendOTP = async (req, res) => {
+  try {
+    const { emailId } = req.body;
+
+    // find the user
+    const user = await AuthUser.findOne({ emailId: emailId });
+    if (!user) {
+      return res.status(404).json({ code: 404, error: "User doesn't exist!" });
+    }
+    // generate otp
+    const otp = crypto.randomInt(1000, 9999).toString();
+    const otpExpire = Date.now() + 15 * 60 * 1000; // expire after 15 Minutes
+    user.otp = otp;
+    user.otpExpire = otpExpire;
+    await user.save();
+    // send mail
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_ID,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: true,
+      },
+    });
+    const emailOptions = {
+      from: `"Chat-App" <${process.env.EMAIL_ID}>`,
+      to: emailId,
+      subject: "Chat App Email Verification.",
+      html: `
+        <h4>Welcome to ChatApp!</h4>
+        <h2>Confirm verification code</h2>
+        <p>Please enter the following code on the page where you Entered your Email ID</p>
+        <h1>${otp}</h1>
+        <p>This verification code will only be valid for the next 15 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+        <p>Regards,</p>
+        <p>Chat-App.</p>
+      `,
+    };
+    transporter.sendMail(emailOptions, (err) => {
+      if (err) {
+        console.log("generateOTP  failed", err);
+        return res.status(500).json({
+          code: 500,
+          error: "Internal Server Error ",
+        });
+      }
+    });
+    return res.status(200).json({
+      code: 200,
+      message: "Resend Verification code sent Successfully!.",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ code: 500, error: "Internal Server Error!" });
+  }
+};
 export const verifyOTP = async (req, res) => {
   try {
     const { emailId, otp } = req.body;
@@ -300,9 +360,11 @@ export const verifyOTP = async (req, res) => {
     await newUser.save();
     // clean up
     await AuthUser.findByIdAndDelete(user._id);
-    return res
-      .status(201)
-      .json({ code: 201, message: "User created Successfully!." });
+    return res.status(201).json({
+      code: 201,
+      data: { emailId: emailId },
+      message: "User created Successfully!.",
+    });
   } catch (error) {
     console.log("verify otp", error);
     return res

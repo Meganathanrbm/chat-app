@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useLogIn from "../../hooks/useLogIn";
+import useUser from "../../zustand/useUser";
 
 const Login = () => {
   const {
@@ -9,11 +10,15 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { setIsVerify } = useUser();
   const { loading, login } = useLogIn();
   const onSubmit = async (data) => {
     await login(data);
   };
-
+  useEffect(() => {
+    sessionStorage.removeItem("current-user-emailID");
+    setIsVerify(false);
+  }, []);
   return (
     <div className="absolute rounded-xl border-slate-500 dark:border-gray-500 shadow-md p-8 lg:w-[400px] lg:h-auto dark:bg-[#202029] bg-[#feffff]">
       <h2 className="text-primary-100 text-center font-bold text-3xl">

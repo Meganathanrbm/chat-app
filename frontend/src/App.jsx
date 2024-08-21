@@ -15,9 +15,10 @@ import { ProtectedRoute } from "./components/route/ProtectedRoute";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import { Profile } from "./components/profile/Profile";
+import OTPverify from "./pages/auth/OTPverify";
 
 function App() {
-  const { authUser, setAuthUser } = useContext(AuthContext);
+  const { authUser } = useContext(AuthContext);
   const width = useWidth();
 
   return (
@@ -31,6 +32,7 @@ function App() {
         {/* if the user exist, redirect to home otherwise auth route */}
         <Route path="/auth" element={authUser ? <Navigate to="/" /> : <Auth />}>
           <Route path="signup" element={<SignUp />} />
+          <Route path="verifyOTP" element={<OTPverify />} />
           <Route index path="login" element={<Login />} />
           <Route path="forgetPassword" element={<ForgetPassword />} />
           <Route path="resetPassword/:token" element={<ResetPassword />} />
@@ -45,7 +47,7 @@ function App() {
         )}
 
         {/* for small devices */}
-        {width && ( 
+        {width && (
           <>
             <Route path="/" element={<ProtectedRoute />}>
               <Route path="/" element={<ChatContainer />} />
