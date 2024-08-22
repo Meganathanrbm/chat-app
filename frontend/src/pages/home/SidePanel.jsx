@@ -7,13 +7,15 @@ import useConversation from "../../zustand/useConversation";
 import DarkToggle from "../../components/ui/DarkToggle";
 
 export const SidePanel = () => {
-  const { setViewProfile } = useConversation();
+  const { setViewProfile, setSelectedConversation } = useConversation();
+
   const { logout } = useLogOut();
   const { authUser } = useContext(AuthContext);
   const handleLogout = async () => {
     await logout();
   };
   const hanldeViewProfile = () => {
+    setSelectedConversation(null);
     setViewProfile(authUser);
   };
 

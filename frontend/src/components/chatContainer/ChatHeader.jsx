@@ -10,12 +10,13 @@ import { Link } from "react-router-dom";
 export const ChatHeader = ({ searchInput, searchRef, setSearchInput }) => {
   const { authUser, darkToggle, setDarkToggle } = useContext(AuthContext);
   const { logout } = useLogOut();
-  const { setViewProfile } = useConversation();
+  const { setViewProfile, setSelectedConversation } = useConversation();
 
   const handleLogout = async () => {
     await logout();
   };
   const hanldeViewProfile = () => {
+    setSelectedConversation(null);
     setViewProfile(authUser);
   };
   const handleTheme = () => {

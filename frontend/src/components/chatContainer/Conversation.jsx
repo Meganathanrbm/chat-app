@@ -19,10 +19,12 @@ export const Conversation = ({ conversation }) => {
   const isActive = conversation?._id === selectedConversation?._id; // selected conversation
   const isOnline = onlineUsers?.includes(conversation?._id); // online status
 
-  const handleSeen = async () => {
+  const handleSeen = async() => {
     try {
       // seen last message api
-      await fetch(`/api/message/lastSeen/${lastMessage?._id}`);
+      const response = await fetch(`/api/message/lastSeen/${lastMessage?._id}`);
+      const data = await response.json;
+      return data;
     } catch (error) {
       console.log(error); // ! command this in production.
     }

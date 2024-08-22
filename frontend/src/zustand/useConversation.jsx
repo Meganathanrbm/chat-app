@@ -2,13 +2,13 @@ import { create } from "zustand";
 
 const useConversation = create((set) => ({
   selectedConversation:
-    JSON.parse(localStorage.getItem("selectedConversation")) || null, // set selected conversation from the local storage
+    JSON.parse(sessionStorage.getItem("selectedConversation")) || null, // set selected conversation from the local storage
   setSelectedConversation: (selectedConversation) => {
     set({ selectedConversation }); // selectedConversation:selectedConversation
     set({ viewProfile: null }); // reset the selected profile
     if (typeof window !== "undefined") {
-      // Ensure localStorage availability
-      localStorage.setItem(
+      // Ensure sessionStorage availability
+      sessionStorage.setItem(
         "selectedConversation",
         JSON.stringify(selectedConversation)
       );

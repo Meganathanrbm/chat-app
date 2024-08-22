@@ -7,7 +7,6 @@ const useUpdateProfileAbout = ({ setIsAboutEdit }) => {
   const [loading, setLoading] = useState(false);
 
   const { authUser, setAuthUser } = useContext(AuthContext);
-  console.log(authUser);
   const { setViewProfile } = useConversation();
   const updateProfileAbout = async (about) => {
     try {
