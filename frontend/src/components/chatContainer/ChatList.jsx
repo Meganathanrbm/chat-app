@@ -3,12 +3,13 @@ import { Conversation } from "./Conversation";
 import useGetConversation from "../../hooks/useGetConversation";
 import { FaPlus } from "react-icons/fa6";
 import useGetAllUsers from "../../hooks/useGetAllUsers";
+import { useListenMessage } from "../../hooks/useListenMessage";
 
 export const ChatList = ({ searchInput, searchRef, setSearchInput }) => {
   const { conversations } = useGetConversation();
   const [allconversations, setAllconversations] = useState(null);
   const { allUsers } = useGetAllUsers();
-
+  useListenMessage();
   useEffect(() => {
     const handleSearch = () => {
       // Todo: filter mobile number also

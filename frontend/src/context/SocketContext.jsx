@@ -20,7 +20,6 @@ export const SocketContextProvider = ({ children }) => {
       setSocket(socket);
       //   socket.on() is used to listen to the events
       socket.on("getOnlineUsers", (users) => setOnlineUsers(users));
-
       //   close the socket connection for cleanup function
       return () => socket.close();
     } else {
