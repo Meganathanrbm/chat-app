@@ -30,6 +30,12 @@ body::-webkit-scrollbar-track {
   background-color: aliceblue !important;
 }
 
+input:-webkit-autofill {
+
+  background-color: none !important;
+
+}
+
 .center {
   @apply flex justify-center items-center
 }

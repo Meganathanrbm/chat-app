@@ -19,7 +19,7 @@ export const Conversation = ({ conversation }) => {
   const isActive = conversation?._id === selectedConversation?._id; // selected conversation
   const isOnline = onlineUsers?.includes(conversation?._id); // online status
 
-  const handleSeen = async() => {
+  const handleSeen = async () => {
     try {
       // seen last message api
       const response = await fetch(`/api/message/lastSeen/${lastMessage?._id}`);
@@ -71,11 +71,34 @@ export const Conversation = ({ conversation }) => {
       <div className="w-full relative">
         <h4 className="font-semibold  flex w-full line-clamp-1 text-black capitalize dark:text-slate-100 text-base ">
           {conversation?.fullname}
-          <span className="text-slate-500 shrink-0  dark:text-slate-400 ml-auto text-xs float-right fort-normal">
+          <span
+            className={`
+            ${
+              lastMessage &&
+              lastMessage?.message?.length > 0 &&
+              !lastMessage?.seen &&
+              lastMessage?.senderId != authUser?._id &&
+              notify
+                ? "text-primary-100"
+                : "text-slate-500 shrink-0  dark:text-slate-400"
+            }
+             ml-auto text-xs float-right fort-normal`}
+          >
             {lastMessage.createdAt && formatTime(lastMessage.createdAt)}
           </span>
         </h4>
-        <p className="text-[13px] leading-5 line-clamp-1 text-slate-500 pr-6 dark:text-slate-400 font-normal">
+        <p
+          className={`${
+            lastMessage &&
+            lastMessage?.message?.length > 0 &&
+            !lastMessage?.seen &&
+            lastMessage?.senderId != authUser?._id &&
+            notify
+              ? "text-slate-700 dark:text-slate-200"
+              : "text-slate-500 dark:text-slate-400"
+          }
+          text-[13px] leading-5 line-clamp-1 font-normal`}
+        >
           {lastMessage?.message}
           {/* for maintain height consistent */}
           <span className=" opacity-0">!</span>
@@ -85,9 +108,7 @@ export const Conversation = ({ conversation }) => {
             !lastMessage?.seen &&
             lastMessage?.senderId != authUser?._id && // check - new message is from the other end
             notify && (
-              <span className="float-right z-10 absolute right-0 top-1/2 text-white text-[9px] p-2 center mt-1 bg-primary-100 rounded-full w-1 h-1">
-                1
-              </span>
+              <span className="float-right z-10 absolute right-0 top-1/2 text-white text-[9px] p-1 center mt-1 bg-primary-100 rounded-full w-1 h-1"></span>
             )}
         </p>
       </div>

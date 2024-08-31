@@ -10,7 +10,9 @@ export const MessageContainer = () => {
 
   return (
     <section
-      className={`w-full h-full flex ${viewProfile && "md:hidden lg:flex "}
+      className={`w-full h-svh sm:h-full flex ${
+        viewProfile && "md:hidden lg:flex "
+      }
      flex-col overflow-hidden border-r dark:border-r-gray-800 `}
     >
       {selectedConversation ? (
