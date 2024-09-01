@@ -81,7 +81,7 @@ const Login = () => {
             <input
               {...register("password", { required: true })}
               type="password"
-              placeholder="Enter passeword"
+              placeholder="Enter password"
               className="grow text-base input-md"
             />
           </label>
