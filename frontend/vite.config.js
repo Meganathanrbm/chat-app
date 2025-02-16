@@ -8,7 +8,8 @@ export default defineConfig({
     port: 8000,
     proxy: {
       "/api": {
-        target: "https://chat-app-mkum.onrender.com",
+        // target: "https://chat-app-mkum.onrender.com", // production
+        target: "http://localhost:8000", // dev
       },
     },
   },

@@ -12,6 +12,7 @@ export const signup = async (req, res) => {
     const { fullname, mobile, emailId, gender } = req.body;
     // find the user
     const user = await User.findOne({ emailId: emailId });
+    console.log(user)
     if (!user) {
       return res
         .status(500)

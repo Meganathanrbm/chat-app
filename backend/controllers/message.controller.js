@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Conversation from "../db/models/conversation.model.js";
 import Message from "../db/models/message.model.js";
 import User from "../db/models/user.model.js";
@@ -119,8 +120,10 @@ export const getLastMessage = async (req, res) => {
     if (!conversation) {
       return res.status(200).json({ code: 200, data: [] });
     }
-    const lastMessage = conversation.messages[conversation.messages.length - 1];
-
+    const lastMessage =
+      conversation.messages[
+        conversation.messages.length >= 1 ? conversation.messages.length - 1 : 0
+      ];
     return res.status(200).json({ code: 200, data: lastMessage });
   } catch (error) {
     console.log("get last message failed", error);
@@ -131,6 +134,9 @@ export const getLastMessage = async (req, res) => {
 export const seenMessage = async (req, res) => {
   try {
     const { id: messageId } = req.params;
+    if (!messageId || !mongoose.Types.ObjectId.isValid(messageId)) {
+      return res.status(400).json({ error: "Invalid message ID" });
+    }
     const updatedMessage = await Message.findByIdAndUpdate(
       messageId,
       { seen: true },

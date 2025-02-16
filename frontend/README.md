@@ -44,3 +44,17 @@ change navbarlist
 
 invalid json error
 test
+react query update 
+group chat 
+profile picture change 
+end-to-end encryption
+emoji in the typing field
+video call 
+
+
+
+problem 
+<!-- - otp verification not working -->
+<!-- - updating the about  -->
+<!-- - send messages not showing  -->
+onine status not showing 
